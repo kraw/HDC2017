@@ -1,0 +1,48 @@
+.stepper {
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );  
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  position: absolute;
+}
+
+.stepper > button {
+  background: none;
+  border: none;
+  border-radius: 2px;
+  color: #2196F3;
+  font-size: 14px;
+  height: 36px;
+  outline: none;
+  width: 36px;
+}
+
+.stepper > button:hover {
+  background-color: rgba( 0, 0, 0, 0.20 );
+}
+
+.stepper > input {
+  background: none;
+  border: none;
+  border-bottom: solid 2px rgba( 0, 0, 0, 0.38 );
+  border-radius: 0;
+  color: rgba( 0, 0, 0, 0.87 );
+  font-size: 14px;
+  margin: 0 8px 0 8px;
+  padding: 0 0 4px 0;
+  outline: none;
+  text-align: center;
+  width: 50px;
+}
+
+.stepper > input:focus {
+  border-bottom: solid 2px #2196F3;
+}
+
+.stepper > input::-webkit-outer-spin-button,
+.stepper > input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

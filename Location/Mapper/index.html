@@ -1,0 +1,44 @@
+<html>
+<head>
+
+<title>Mapper</title>
+
+<!-- Google Fonts -->
+<!-- Roboto -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+
+<!-- Teh stylz -->
+<link href="style/grid.css" rel="stylesheet" type="text/css">
+<link href="style/mapper.css" rel="stylesheet" type="text/css">
+<link href="style/stepper.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+<!-- Image will go here -->
+<!-- Grid will go here on top of it -->
+
+<!-- Grid sizing -->
+<div id="sizing" class="stepper">
+  <button class="decrease">-</button>
+  <input type="number" value="5" maxlength="3">
+  <button class="increase">+</button>
+</div>
+
+<!-- Grid offset -->
+<div id="offset" class="stepper">
+  <button class="decrease">-</button>
+  <input type="number" value="0" maxlength="3">
+  <button class="increase">+</button>
+</div>
+
+<!-- Libraries -->
+<script src="lib/pathfinding-0.4.18.js"></script>
+
+<!-- Teh codez -->
+<script src="script/grid.js"></script>
+<script src="script/stepper.js"></script>
+<script src="script/mapper.js"></script>
+
+</body>
+</html>

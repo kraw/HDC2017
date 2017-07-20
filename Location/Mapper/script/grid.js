@@ -14,7 +14,8 @@ class Grid {
   }
 
   get dimensions() {
-    let position = this.root.children[this.root.children.length - 1].getAttribute( 'data-position' );
+    let last = this.root.querySelector( 'div:last-of-type > div:last-of-type' );
+    let position = last.getAttribute( 'data-position' );
     let coordinates = position.split( ',' );
 
     return {
@@ -39,8 +40,10 @@ class Grid {
 
   generate( size ) {
     for( let y = 0; y < window.innerHeight + 200; y = y + size ) {
+      let row = document.createElement( 'div' );
       for( let x = 0; x < window.innerWidth + 200; x = x + size ) {
         let element = document.createElement( 'div' );
+        element.classList.add( 'cell' );
         element.addEventListener( 'mouseover', evt => this.doOver( evt ) );
         element.addEventListener( 'mouseout', evt => this.doOut( evt ) );        
         element.addEventListener( 'mousedown', evt => this.doDown( evt ) );
@@ -48,8 +51,9 @@ class Grid {
         element.setAttribute( 'data-position', ( x / size ) + ',' + ( y / size ) );
         element.style.width = size + 'px';
         element.style.height = size + 'px';
-        this.root.appendChild( element );
+        row.appendChild( element );
       }
+      this.root.appendChild( row );
     }  
 
     console.log( this.dimensions );
@@ -71,9 +75,11 @@ class Grid {
 
   map() {
     let matrix = new Array( this.dimensions.height ).fill( 0 ).map( row => new Array( this.dimensions.width ).fill( 0 ) );
-  
-    for( let c = 0; c < this.root.children; c++ ) {
-      let position = this.root.children[c].getAttribute( 'data-position' );
+    let walls = this.root.querySelectorAll( 'div.cell' );
+
+    for( let w = 0; w < walls.length; w++ ) {
+      // let position = this.root.children[c].getAttribute( 'data-position' );
+      let position = walls[w].getAttribute( 'data-position' );
 
       let parts = position.split( ',' );
       let coordinates = {
@@ -81,7 +87,7 @@ class Grid {
         y: parseInt( parts[1] )
       };
 
-      matrix[x, y] = this.root.children[c].classList.contains( 'selected' ) ? 1 : 0;
+      matrix[coordinates.x, coordinates.y] = walls[w].classList.contains( 'selected' ) ? 1 : 0;
     }
 
     return matrix;

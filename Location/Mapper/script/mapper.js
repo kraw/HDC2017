@@ -13,7 +13,7 @@ class Mapper {
   export() {
     let grid = new PF.Grid( this.grid.map() );
     let finder = new PF.AStarFinder();
-    let path = finder.findPath( 57, 43, 194, 55, grid );
+    let path = finder.findPath( 75, 57, 127, 73, grid );
 
     for( let p = 0; p < path.length; p++ ) {
       let query = 'div[data-position="' + path[p][0] + ',' + path[p][1] + '"]';

@@ -74,11 +74,11 @@ class Grid {
   }
 
   map() {
-    let matrix = new Array( this.dimensions.height ).fill( 0 ).map( row => new Array( this.dimensions.width ).fill( 0 ) );
-    let walls = this.root.querySelectorAll( 'div.cell' );
+    // let matrix = new Array( this.dimensions.height ).fill( 0 ).map( row => new Array( this.dimensions.width ).fill( 0 ) );
+    let matrix = new PF.Grid( this.dimensions.width, this.dimensions.height );
+    let walls = this.root.querySelectorAll( 'div.cell.selected' );
 
     for( let w = 0; w < walls.length; w++ ) {
-      // let position = this.root.children[c].getAttribute( 'data-position' );
       let position = walls[w].getAttribute( 'data-position' );
 
       let parts = position.split( ',' );
@@ -87,7 +87,8 @@ class Grid {
         y: parseInt( parts[1] )
       };
 
-      matrix[coordinates.x, coordinates.y] = walls[w].classList.contains( 'selected' ) ? 1 : 0;
+      // matrix[coordinates.x][coordinates.y] = 1;
+      matrix.setWalkableAt( coordinates.x, coordinates.y, false );
     }
 
     return matrix;

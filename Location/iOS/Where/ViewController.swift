@@ -9,6 +9,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CloudantDeleg
   let CONFIGURATION_PATH = Bundle.main.path(forResource:"Config", ofType: "plist")
   
   var config:NSDictionary!
+  
   var map:Map!
   
   var region: CLBeaconRegion!
@@ -54,7 +55,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CloudantDeleg
         // Beacon that is really close
         if beacon.proximity == CLProximity.near {
           // Which beacon
-          for location in map.locations {
+          for location in map.beacons {
             if location.minor == beacon.minor {
               lblLocation.text = location.name
             }
@@ -83,7 +84,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CloudantDeleg
     
     // Locations in map
     for (_, beacon) in document["beacons"] {
-      map.locations.append(Location(
+      map.beacons.append(Beacon(
         withMajor: NSNumber(value: beacon["major"].intValue),
         minor: NSNumber(value: beacon["minor"].intValue),
         name: beacon["name"].stringValue

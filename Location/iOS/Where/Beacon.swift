@@ -1,6 +1,6 @@
 import Foundation
 
-class Location {
+class Beacon {
 
   var name:String!
   var major:NSNumber

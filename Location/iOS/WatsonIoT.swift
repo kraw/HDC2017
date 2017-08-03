@@ -7,7 +7,7 @@ class WatsonIoT:CocoaMQTTDelegate {
   
   init(withClientId clientId:String, host:String, port:NSNumber) {
     mqtt = CocoaMQTT(
-      clientID: " ",
+      clientID: clientId,
       host: host,
       port: UInt16(port.intValue)
     )

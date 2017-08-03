@@ -16,6 +16,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CloudantDeleg
   var manager: CLLocationManager!
   
   var cloudant:Cloudant!
+  var watson:WatsonIoT!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -33,6 +34,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CloudantDeleg
     
     // Request authorization
     manager.requestWhenInUseAuthorization()
+    
+    // Connect to Watson IoT
+    watson = WatsonIoT(
+      withClientId: "a:ts200f:abc123",
+      host: (config.value(forKey: "WatsonHost") as? String)!,
+      port: NSNumber(value: (config.value(forKey: "WatsonPort") as? Int)!)
+    )
+    watson.connect(
+      username: (config.value(forKey: "WatsonApplication") as? String)!,
+      password: (config.value(forKey: "WatsonToken") as? String)!
+    )
     
     // Load map from database
     cloudant = Cloudant(
@@ -54,10 +66,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CloudantDeleg
       for beacon in beacons {
         // Beacon that is really close
         if beacon.proximity == CLProximity.near {
-          // Which beacon
+          // Look for match from database
           for location in map.beacons {
+            // Found match
             if location.minor == beacon.minor {
-              lblLocation.text = location.name
+              // Only update if different
+              if lblLocation.text != location.name {
+                // Change label
+                lblLocation.text = location.name
+                
+                // Broadcast location
+                let message = JSON([
+                  "major": location.major,
+                  "minor": location.minor,
+                  "name": location.name
+                ])
+                watson.publish(
+                  topic: "iot-2/type/Beacon/id/IBM/evt/beacon/fmt/json",
+                  message: message.rawString()!
+                )
+              }
             }
           }
           

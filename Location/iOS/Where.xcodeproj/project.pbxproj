@@ -81,11 +81,11 @@
 		0A6F89D31F3219A70033C71F = {
 			isa = PBXGroup;
 			children = (
-				0AAAFD0F1F3336B7006B3774 /* SwiftyJSON.framework */,
 				0A6F89DE1F3219A70033C71F /* Where */,
 				0A6F89DD1F3219A70033C71F /* Products */,
 				0A03581D1F321AFB005BF8A7 /* CocoaAsyncSocket.framework */,
 				0A03581E1F321AFB005BF8A7 /* CocoaMQTT.framework */,
+				0AAAFD0F1F3336B7006B3774 /* SwiftyJSON.framework */,
 				0A03581F1F321AFB005BF8A7 /* SwiftyTimer.framework */,
 			);
 			sourceTree = "<group>";

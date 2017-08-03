@@ -1,0 +1,66 @@
+body {
+  background-color: rgb( 65, 120, 190 );
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  font-family: 'Roboto', sans-serif;    
+  margin: 0;
+  padding: 0;
+}
+
+iot-gauge {
+  flex-basis: 0;
+  flex-grow: 1;
+}
+
+iot-gauge:nth-of-type( 1 ) {
+  background-color: #1f3549;
+}
+
+iot-gauge:nth-of-type( 2 ) {
+  background-color: #182637;
+}
+
+iot-gauge:nth-of-type( 3 ) {
+  background-color: #323232;
+}
+
+iot-orientation {
+  flex-basis: 0;
+  flex-grow: 1;
+}
+
+.accelerometer {
+  display: flex;
+  flex-direction: row;
+}
+
+.portrait {
+  display: flex;
+  flex-direction: column; 
+  flex-grow: 1;
+}
+
+@media only screen and ( orientation: portrait ) {
+  .accelerometer {
+    flex-direction: row;
+    height: calc( 100vw / 3 );
+    width: 100%;  
+  }
+
+  .portrait {
+    flex-direction: column;
+  }
+}
+
+@media only screen and ( orientation: landscape ) {
+  .accelerometer {
+    flex-direction: column;
+    width: calc( 100vh / 3 );   
+    height: 100%;
+  }
+
+  .portrait {
+    flex-direction: row;
+  }
+}

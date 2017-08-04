@@ -1,8 +1,10 @@
+import Alamofire
+import AlamofireObjectMapper
 import CoreLocation
 import SwiftyJSON
 import UIKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate, CloudantDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate {
   
   @IBOutlet weak var lblLocation: UILabel!
   
@@ -10,12 +12,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CloudantDeleg
   
   var config:NSDictionary!
   
-  var map:Map!
+  var floorplan:Floorplan!
   
   var region: CLBeaconRegion!
   var manager: CLLocationManager!
   
-  var cloudant:Cloudant!
   var watson:WatsonIoT!
   
   override func viewDidLoad() {
@@ -46,16 +47,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CloudantDeleg
       password: (config.value(forKey: "WatsonToken") as? String)!
     )
     
-    // Load map from database
-    cloudant = Cloudant(
-      forDatabase: (config.value(forKey: "CloudantDatabase") as? String)!,
-      key: (config.value(forKey: "CloudantKey") as? String)!,
-      password: (config.value(forKey: "CloudantPassword") as? String)!
-    )
-    cloudant.delegate = self
-    cloudant.read(
-      document: (config.value(forKey: "DefaultMap") as? String)!
-    )
+    // Load default map
+    let path =
+      (config.value(forKey: "BluemixPath") as? String)! +
+      (config.value(forKey: "MapPath") as? String)! + "/" +
+      (config.value(forKey: "DefaultMap") as? String)!  
+    Alamofire.request(path).responseObject { (response: DataResponse<Floorplan>) in
+      self.floorplan = response.result.value
+      print("\(self.floorplan.name!).")
+      
+      // Beacon region to monitor
+      self.region = CLBeaconRegion(
+        proximityUUID: UUID(uuidString: self.floorplan.uuid!)!,
+        identifier: self.floorplan.identifier!
+      )
+      self.region.notifyOnEntry = true
+      self.region.notifyOnExit = true
+      
+      // Start monitoring for beacons
+      self.manager.startMonitoring(for: self.region)
+      self.manager.startRangingBeacons(in: self.region)
+    }
   }
   
   // Found or lost beacons
@@ -67,22 +79,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CloudantDeleg
         // Beacon that is really close
         if beacon.proximity == CLProximity.near {
           // Look for match from database
-          for location in map.beacons {
+          for location in floorplan.beacons! {
             // Found match
-            if location.minor == beacon.minor {
+            if location.minor! == beacon.minor {
               // Only update if different
-              if lblLocation.text != location.name {
+              if lblLocation.text != location.name! {
                 // Change label
-                lblLocation.text = location.name
+                lblLocation.text = location.name!
                 
                 // Broadcast location
                 let message = JSON([
-                  "major": location.major,
-                  "minor": location.minor,
-                  "name": location.name
+                  "major": location.major!.intValue,
+                  "minor": location.minor!.intValue,
+                  "name": location.name!
                 ])
                 watson.publish(
-                  topic: "iot-2/type/Beacon/id/IBM/evt/beacon/fmt/json",
+                  topic: (config.value(forKey: "BeaconTopic") as? String)!,
                   message: message.rawString()!
                 )
               }
@@ -97,39 +109,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, CloudantDeleg
       lblLocation.text = ""
       lblLocation.isHidden = true
     }
-  }
-  
-  // Map read from database
-  func didRead(document:JSON) {
-    print(document)
-    
-    // Map
-    self.map = Map(
-      withUUID: UUID(uuidString: document["uuid"].stringValue)!,
-      identifier: document["identifier"].stringValue,
-      name: document["name"].stringValue
-    )
-    
-    // Locations in map
-    for (_, beacon) in document["beacons"] {
-      map.beacons.append(Beacon(
-        withMajor: NSNumber(value: beacon["major"].intValue),
-        minor: NSNumber(value: beacon["minor"].intValue),
-        name: beacon["name"].stringValue
-      ) )
-    }
-    
-    // Beacon region to monitor
-    region = CLBeaconRegion(
-      proximityUUID: self.map.uuid,
-      identifier: self.map.identifier
-    )
-    region.notifyOnEntry = true
-    region.notifyOnExit = true
-    
-    // Start monitoring for beacons
-    manager.startMonitoring(for: region)
-    manager.startRangingBeacons(in: region)
   }
   
   override func didReceiveMemoryWarning() {

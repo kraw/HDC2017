@@ -30,6 +30,7 @@ app.use( function( req, res, next ) {
 app.use( '/', express.static( 'public' ) );
 
 // Routes
+app.use( '/api', require( './routes/cloudant' ) );
 app.use( '/api', require( './routes/tts' ) );
 
 // Bluemix
@@ -45,7 +46,7 @@ var server = app.listen( env.port, env.bind, function() {
 var client  = mqtt.connect( 
   config.iot.host, 
   {
-    clientId: config.iot.client,
+    clientId: config.iot.client + Math.random().toString( 16 ).substr( 2, 8 ),
     username: config.iot.application,
     password: config.iot.token,
     port: config.iot.port

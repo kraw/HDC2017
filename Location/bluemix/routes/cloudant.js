@@ -4,22 +4,21 @@ var request = require( 'request' );
 // Router
 var router = express.Router();
 
-// Access token
-router.get( '/tts/token', function( req, res ) {
+router.get( '/cloudant/:doc', function( req, res ) {
   var hash = null;
   
-  // Request token
+  // Retrieve document
   request( {
     method: 'GET',
-    url: req.config.tts.stream + '?url=' + req.config.tts.url, 
+    url: config.cloudant.database + '/' + req.params.doc, 
     auth: {
-      username: req.config.tts.username,
-      password: req.config.tts.password    
+      username: config.cloudant.key,
+      password: config.cloudant.password
     }
   }, function( err, result, body ) {
     res.send( body );
   } );
 } );
-
+  
 // Export
 module.exports = router;

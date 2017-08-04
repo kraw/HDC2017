@@ -1,15 +1,18 @@
 import Foundation
+import ObjectMapper
 
-class Beacon {
+class Beacon:Mappable {
 
-  var name:String!
-  var major:NSNumber
-  var minor:NSNumber
+  var name:String?
+  var major:NSNumber?
+  var minor:NSNumber?
   
-  init(withMajor major:NSNumber, minor:NSNumber, name:String) {
-    self.major = major
-    self.minor = minor
-    self.name = name
+  required init?(map: Map) {}
+  
+  func mapping(map: Map) {
+    name <- map["name"]
+    major <- map["major"]
+    minor <- map["minor"]
   }
   
 }

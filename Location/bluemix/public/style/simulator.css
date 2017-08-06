@@ -1,0 +1,32 @@
+body {
+  align-items: center;
+  background-color: #4178be;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+p {
+  color: white;
+  font-family: 'tekton-pro', sans-serif;
+  font-size: 2em;
+  margin: 50px 0 0 0;
+  text-align: center;
+}
+
+#map {
+  width: 90%;
+}
+
+.logo {
+  background-image: url( '/img/ibm.svg' );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  bottom: 16px;
+  height: 25px;
+  left: 16px;
+  opacity: 0.80;
+  position: absolute;  
+  right: 16px;
+}

@@ -57,6 +57,15 @@ var client  = mqtt.connect(
 // Socket
 var io = require( 'socket.io' )( server );
 
+// New socket connection
+io.on( 'connection', function( socket ) {
+  // Listen for beacon event
+  // Broadcast when encountered
+  socket.on( 'beacon', function( data ) {
+    io.emit( 'beacon', data );
+  } );
+} );
+
 // Connected to Watson
 // Subscribe for sensor data
 client.on( 'connect', function() {

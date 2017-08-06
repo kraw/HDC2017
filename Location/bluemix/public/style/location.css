@@ -1,66 +1,86 @@
+@keyframes indoor {
+  0% {
+    opacity: 0.30;
+    transform: scale( 1, 1 );
+  }
+  66% {
+    opacity: 0.30;
+    transform: scale( 1, 1 );
+  }  
+  100% {
+    opacity: 0;
+    transform: scale( 4, 4 );
+  }
+}
+  
 body {
-  background-color: rgb( 65, 120, 190 );
+  align-items: center;
+  background-color: #4178be;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  font-family: 'Roboto', sans-serif;    
-  margin: 0;
-  padding: 0;
+  justify-content: center;
 }
 
-iot-gauge {
-  flex-basis: 0;
-  flex-grow: 1;
+p {
+  color: white;
+  font-family: 'tekton-pro', sans-serif;
+  font-size: 2em;
+  margin: 50px 0 0 0;
+  text-align: center;
 }
 
-iot-gauge:nth-of-type( 1 ) {
-  background-color: #1f3549;
+#map {
+  width: 90%;
 }
 
-iot-gauge:nth-of-type( 2 ) {
-  background-color: #182637;
+.center {
+  background-color: #132937;
+  border: solid white 4px;
+  border-radius: 20px;
+  box-shadow: 0 0 8px rgba( 19, 41, 55, 0.80 );  
+  height: 20px;
+  left: 40px;
+  position: absolute;  
+  top: 40px;  
+  transform: translate( -14px, -14px );
+  width: 20px;
 }
 
-iot-gauge:nth-of-type( 3 ) {
-  background-color: #323232;
+.location {
+  display: none;
+  height: 80px;
+  left: 40;
+  position: absolute;  
+  top: 40;  
+  transform: translate( -40px, -40px );
+  transform-origin: 40px 40px;
+  width: 80px;
 }
 
-iot-orientation {
-  flex-basis: 0;
-  flex-grow: 1;
+.logo {
+  background-image: url( '/img/ibm.svg' );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  bottom: 16px;
+  height: 25px;
+  left: 16px;
+  opacity: 0.80;
+  position: absolute;  
+  right: 16px;
 }
 
-.accelerometer {
-  display: flex;
-  flex-direction: row;
-}
-
-.portrait {
-  display: flex;
-  flex-direction: column; 
-  flex-grow: 1;
-}
-
-@media only screen and ( orientation: portrait ) {
-  .accelerometer {
-    flex-direction: row;
-    height: calc( 100vw / 3 );
-    width: 100%;  
-  }
-
-  .portrait {
-    flex-direction: column;
-  }
-}
-
-@media only screen and ( orientation: landscape ) {
-  .accelerometer {
-    flex-direction: column;
-    width: calc( 100vh / 3 );   
-    height: 100%;
-  }
-
-  .portrait {
-    flex-direction: row;
-  }
-}
+.ping {
+  animation-duration: 6s;
+  animation-iteration-count: infinite;    
+  animation-name: indoor;  
+  background-color: #132937;    
+  border-radius: 80px;
+  height: 20px;
+  left: 30px;
+  opacity: 0.20;
+  position: absolute;  
+  top: 30px;  
+  transform-origin: 10px 10px;
+  width: 20px;  
+}  

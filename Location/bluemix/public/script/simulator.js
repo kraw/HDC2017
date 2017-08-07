@@ -12,7 +12,7 @@ class Simulator {
 
     this.xhr = new XMLHttpRequest();
     this.xhr.addEventListener( 'load', evt => this.doMapLoad( evt ) );
-    this.xhr.open( 'GET', '/api/cloudant/hoxton', true );
+    this.xhr.open( 'GET', '/api/cloudant/lavista', true );
     this.xhr.send( null );
   }
 

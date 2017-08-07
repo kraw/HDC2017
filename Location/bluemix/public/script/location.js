@@ -47,16 +47,16 @@ class Location {
         this.location.style.left = ( scaled.x + bounds.left ) + 'px';
         this.location.style.top = ( scaled.y + bounds.top ) + 'px';        
         this.location.style.display = 'block';
-        
+     
+        // Say where we are
+        WatsonSpeech.TextToSpeech.synthesize( {
+          text: 'Kevin, you are in ' + ' ' + this.model.map.context + ' ' + evt.name.toLowerCase() + '.',
+          token: this.token
+        } );        
+
         break;
       }
     }
-
-    // Say where we are
-    WatsonSpeech.TextToSpeech.synthesize( {
-      text: 'Kevin, you are in the ' + evt.name.toLowerCase() + '.',
-      token: this.token
-    } );
   }
 
   doMapLoad( evt ) {
@@ -73,7 +73,7 @@ class Location {
     this.xhr.removeEventListener( 'load', this.doTokenLoad );
 
     this.xhr.addEventListener( 'load', this.doMapLoad );
-    this.xhr.open( 'GET', '/api/cloudant/hoxton', true );
+    this.xhr.open( 'GET', '/api/cloudant/lavista', true );
     this.xhr.send( null );
   }
 

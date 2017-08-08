@@ -61,7 +61,7 @@ class Location {
 
   doMapLoad( evt ) {
     this.model = JSON.parse( this.xhr.responseText );
-    this.map.src = '/img/' + this.model.map.vector;
+    this.map.src = '/maps/' + this.model.map.vector;
     this.label.innerHTML = this.model.name;
 
     this.xhr.removeEventListener( 'load', this.doMapLoad );

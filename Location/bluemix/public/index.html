@@ -3,20 +3,19 @@
 
 <title>Location</title>
 
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet">
+
 <!-- Styles -->
 <link href="style/location.css" type="text/css" rel="stylesheet">
-
-<!-- Typekit -->
-<script src="https://use.typekit.net/bqq3czm.js"></script>
-<script>try{Typekit.load({ async: true });}catch(e){}</script>
 
 </head>
 <body>
 
-<!-- Map -->
 <!-- Label -->
-<img id="map">
+<!-- Map -->
 <p></p>
+<div id="map"></div>
 
 <!-- Location -->
 <div class="location">
@@ -24,10 +23,20 @@
   <div class="center"></div>
 </div>
 
-<!-- Branding -->
+<!-- Directions -->
+<div id="directions">
+  <img src="img/my.location.svg" width="24" height="24" class="destination">  
+  <select></select>
+  <div class="path"></div>
+  <img src="img/place.svg" width="24" height="24" class="destination">  
+  <select></select>
+</div>
+
+<!-- Branding
 <a href="http://twitter.com/krhoyt" target="_blank">
   <div class="logo"></div>  
 </a>
+-->
 
 <!-- Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.js"></script>

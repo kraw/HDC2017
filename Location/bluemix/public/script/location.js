@@ -1,13 +1,17 @@
 class Location {
 
   constructor() {
-    this.map = document.querySelector( '#map' );
+    this.location = document.querySelector( '.location' );    
     this.label = document.querySelector( 'p' );
-    this.location = document.querySelector( '.location' );
+    this.map = document.querySelector( '#map' );
+    this.start = document.querySelector( 'select:first-of-type' );
+    this.end = document.querySelector( 'select:last-of-type' );
 
     this.doTokenLoad = this.doTokenLoad.bind( this );
-    this.doMapLoad = this.doMapLoad.bind( this );
+    this.doMapLoad = this.doMapLoad.bind( this );    
+    this.doMapsLoad = this.doMapsLoad.bind( this );
 
+    this.maps = null;
     this.model = null;
     this.token = null;
 
@@ -18,6 +22,20 @@ class Location {
     this.xhr.addEventListener( 'load', this.doTokenLoad );
     this.xhr.open( 'GET', '/api/tts/token', true );
     this.xhr.send( null );
+  }
+
+  populateDestinations( select, beacons ) {
+    while( select.children.length > 0 ) {
+      select.removeChild( select.children[0] );
+    }
+
+    for( let b = 0; b < beacons.length; b++ ) {
+      let option = document.createElement( 'option' );
+      option.innerHTML = beacons[b].name;
+      option.setAttribute( 'data-major', beacons[b].major );
+      option.setAttribute( 'data-minor', beacons[b].minor );      
+      select.appendChild( option );
+    }    
   }
 
   doBeaconMessage( evt ) {
@@ -61,10 +79,23 @@ class Location {
 
   doMapLoad( evt ) {
     this.model = JSON.parse( this.xhr.responseText );
-    this.map.src = '/maps/' + this.model.map.vector;
-    this.label.innerHTML = this.model.name;
+    this.map.style.backgroundImage = 'url( /maps/' + this.model.map.vector + ' )';
 
     this.xhr.removeEventListener( 'load', this.doMapLoad );
+
+    this.label.innerHTML = this.model.name;
+    this.populateDestinations( this.start, this.model.beacons );
+    this.populateDestinations( this.end, this.model.beacons );
+  }
+
+  doMapsLoad( evt ) {
+    this.maps = JSON.parse( this.xhr.responseText );
+
+    this.xhr.removeEventListener( 'load', this.doMapsLoad );
+
+    this.xhr.addEventListener( 'load', this.doMapLoad );
+    this.xhr.open( 'GET', '/api/cloudant/' + this.maps[0].id, true );
+    this.xhr.send( null );
   }
 
   doTokenLoad( evt ) {
@@ -72,8 +103,8 @@ class Location {
 
     this.xhr.removeEventListener( 'load', this.doTokenLoad );
 
-    this.xhr.addEventListener( 'load', this.doMapLoad );
-    this.xhr.open( 'GET', '/api/cloudant/lavista', true );
+    this.xhr.addEventListener( 'load', this.doMapsLoad );
+    this.xhr.open( 'GET', '/api/cloudant/all', true );
     this.xhr.send( null );
   }
 

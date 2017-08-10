@@ -12,10 +12,15 @@
 </head>
 <body>
 
-<!-- Label -->
+<!-- Navigation -->
 <!-- Map -->
-<p></p>
-<div id="map"></div>
+<div class="content">
+  <button id="previous"></button>
+  <div id="viewport">
+    <img id="map">
+  </div>  
+  <button id="next"></button>
+</div>
 
 <!-- Location -->
 <div class="location">
@@ -27,16 +32,10 @@
 <div id="directions">
   <img src="img/my.location.svg" width="24" height="24" class="destination">  
   <select></select>
-  <div class="path"></div>
+  <div class="spacer"></div>
   <img src="img/place.svg" width="24" height="24" class="destination">  
   <select></select>
 </div>
-
-<!-- Branding
-<a href="http://twitter.com/krhoyt" target="_blank">
-  <div class="logo"></div>  
-</a>
--->
 
 <!-- Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.js"></script>

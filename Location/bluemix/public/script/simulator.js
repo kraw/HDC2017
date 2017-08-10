@@ -1,20 +1,39 @@
 class Simulator {
 
   constructor() {
-    this.map = document.querySelector( 'img' );
+    this.map = document.querySelector( '#map' );
     this.map.addEventListener( 'click', evt => this.doMapClick( evt ) );
 
-    this.label = document.querySelector( 'p' );
+    this.previous = document.querySelector( 'button:first-of-type' );
+    this.previous.addEventListener( 'click', evt => this.doPreviousClick( evt ) );
+
+    this.next = document.querySelector( 'button:last-of-type' );
+    this.next.addEventListener( 'click', evt => this.doNextClick( evt ) );
+
+    this.doMapLoad = this.doMapLoad.bind( this );    
+    this.doMapsLoad = this.doMapsLoad.bind( this );
+
+    this.index = null;
+    this.maps = null;
+    this.model = null;
 
     this.socket = io();
 
-    this.model = null;
-
     this.xhr = new XMLHttpRequest();
-    this.xhr.addEventListener( 'load', evt => this.doMapLoad( evt ) );
-    this.xhr.open( 'GET', '/api/cloudant/lavista', true );
+    this.xhr.addEventListener( 'load', this.doMapsLoad );
+    this.xhr.open( 'GET', '/api/cloudant/all', true );
     this.xhr.send( null );
   }
+
+  load( id ) {
+    this.xhr.addEventListener( 'load', this.doMapLoad );
+    this.xhr.open( 'GET', '/api/cloudant/' + id, true );
+    this.xhr.send( null );
+  }  
+
+  transform( x, in_min, in_max, out_min, out_max ) {
+    return ( x - in_min ) * ( out_max - out_min ) / ( in_max - in_min ) + out_min;
+  } 
 
   doMapClick( evt ) {
     let ratio = {
@@ -51,9 +70,41 @@ class Simulator {
   doMapLoad( evt ) {
     this.model = JSON.parse( this.xhr.responseText );
 
-    this.map.src = "/img/" + this.model.map.vector;
-    this.label.innerHTML = this.model.name;
+    this.previous.style.display = 'block';
+    this.map.src = '/maps/' + this.model.map.vector;
+    this.next.style.display = 'block';
+
+    this.xhr.removeEventListener( 'load', this.doMapLoad );    
   }
+
+  doMapsLoad( evt ) {
+    this.maps = JSON.parse( this.xhr.responseText );
+    this.index = 0;
+
+    this.xhr.removeEventListener( 'load', this.doMapsLoad );
+
+    this.load( this.maps[this.index].id );
+  }  
+
+  doNextClick( evt ) {
+    if( this.index == ( this.maps.length - 1 ) ) {
+      this.index = 0;
+    } else {
+      this.index = this.index + 1;
+    }
+
+    this.load( this.maps[this.index].id );
+  }
+
+  doPreviousClick( evt ) {
+    if( this.index == 0 ) {
+      this.index = this.maps.length - 1;
+    } else {
+      this.index = this.index - 1;
+    }
+
+    this.load( this.maps[this.index].id );
+  }  
 
 }
 

@@ -21,21 +21,39 @@ body {
   font-family: 'Roboto', sans-serif;  
   justify-content: center;
   margin: 0;
+  overflow: hidden;
   padding: 0;
 }
 
-p {
+button {
+  background: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  border: none;  
   color: white;
-  font-family: 'Roboto', sans-serif;  
-  font-size: 32px;
-  font-weight: 100;
-  margin: 25px 0 25px 0;
-  text-align: center;
+  display: none;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  width: 56px;
+}
+
+button:first-of-type {
+  background-image: url( '/img/left.svg' );
+}
+
+button:last-of-type {
+  background-image: url( '/img/right.svg' );
 }
 
 select {
   -webkit-appearance: none;  
   background: none;
+  background-image: url( '/img/drop.down.svg' );
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-size: 24px;  
   border: none;
   border-bottom: solid 1px white;
   border-radius: 0;
@@ -60,12 +78,13 @@ select {
   width: 100%;
 }
 
-#map {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  flex-grow: 1;
-  width: 75%;
+#viewport {
+  margin: 0 25px 0 25px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0.75;
+  justify-content: center;
+  position: relative;
 }
 
 .center {
@@ -79,6 +98,14 @@ select {
   top: 40px;  
   transform: translate( -14px, -14px );
   width: 20px;
+}
+
+.content {
+  display: flex; 
+  flex-direction: row; 
+  flex-grow: 1;
+  justify-content: center;     
+  width: 100%; 
 }
 
 .destination {
@@ -96,28 +123,6 @@ select {
   width: 80px;
 }
 
-.logo {
-  background-image: url( '/img/ibm.svg' );
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  bottom: 16px;
-  height: 25px;
-  left: 16px;
-  opacity: 0.80;
-  position: absolute;  
-  right: 16px;
-}
-
-.path {
-  background-position: center;
-  background-repeat: repeat-x;
-  background-size: 24px;
-  flex-basis: 0;    
-  flex-grow: 0.25; 
-  height: 24px;
-}
-
 .ping {
   animation-duration: 6s;
   animation-iteration-count: infinite;    
@@ -132,3 +137,8 @@ select {
   transform-origin: 10px 10px;
   width: 20px;  
 }  
+
+.spacer {
+  flex-basis: 0;    
+  flex-grow: 0.25; 
+}

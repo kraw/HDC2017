@@ -1,6 +1,5 @@
 var express = require( 'express' );
 var fs = require( 'fs' );
-var getPixels = require( 'get-pixels' );
 var multer = require( 'multer' );
 var randomstring = require( 'randomstring' );
 var request = require( 'request' );
@@ -24,10 +23,7 @@ var upload = multer( {
 
 // Upload map file
 router.post( '/walls/upload', upload.single( 'image' ), function( req, res ) {
-  getPixels( __dirname + '/../' + req.file.path, function( err, pixels ) {
-    console.log( pixels.shape.slice() )
-    res.send( req.file.filename );    
-  } );
+  res.send( req.file.filename );    
 } );
 
 // Clear map files on disk

@@ -48,26 +48,26 @@ class Walls {
     let pixels = this.context.getImageData( 0, 0, this.canvas.width, this.canvas.height ).data; 
     
     console.log( pixels.length / 4 );
-    console.log( pixels[0] + ', ' + pixels[1] + ', ' + pixels[2] );
-    console.log( pixels );
+    console.log( pixels[0] + ', ' + pixels[1] + ', ' + pixels[2] + ', ' + pixels[3] );
 
     let matrix = [];
 
-    for( let r = 0; r < this.canvas.width; r++ ) {
+    for( let r = 0; r < this.canvas.height; r++ ) {
       let row = [];
 
-      for( let c = 0; c < this.canvas.height; c++ ) {
-        if( pixels[(r * ( this.canvas.width * 4 ) ) + ( c * 4 )] == 0 ) {
-          row.push( 1 );
-        } else {
+      for( let c = 0; c < this.canvas.width; c++ ) {
+        let offset = ( r * ( this.canvas.width * 4 ) ) + ( ( c * 4 ) + 3 );
+        if( pixels[offset] == 0 ) {
           row.push( 0 );
+        } else {
+          row.push( 1 );
         }
       }
 
       matrix.push( row );
     }
 
-    // console.log( matrix );
+    console.log( JSON.stringify( matrix ) );
   }
 
 }

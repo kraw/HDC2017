@@ -17,8 +17,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
   var region: CLBeaconRegion!
   var manager: CLLocationManager!
   
-  var watson:WatsonIoT!
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -35,17 +33,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     // Request authorization
     manager.requestWhenInUseAuthorization()
-    
-    // Connect to Watson IoT
-    watson = WatsonIoT(
-      withClientId: "a:ts200f:abc123",
-      host: (config.value(forKey: "WatsonHost") as? String)!,
-      port: NSNumber(value: (config.value(forKey: "WatsonPort") as? Int)!)
-    )
-    watson.connect(
-      username: (config.value(forKey: "WatsonApplication") as? String)!,
-      password: (config.value(forKey: "WatsonToken") as? String)!
-    )
     
     // Load default map
     let path =
@@ -87,15 +74,33 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 // Change label
                 lblLocation.text = location.name!
                 
+                // Headers
+                let user: String = (config.value(forKey: "WatsonApplication") as? String)!
+                let password: String = (config.value(forKey: "WatsonToken") as? String)!
+                var headers: HTTPHeaders = [:]
+                
+                if let auth = Request.authorizationHeader(user: user, password: password ) {
+                  headers[auth.key] = auth.value
+                }
+                
                 // Broadcast location
-                let message = JSON([
+                let message: Parameters = [
                   "major": location.major!.intValue,
                   "minor": location.minor!.intValue,
-                  "name": location.name!
-                ])
-                watson.publish(
-                  topic: (config.value(forKey: "BeaconTopic") as? String)!,
-                  message: message.rawString()!
+                  "name": location.name!,
+                  "label": location.label!
+                ]
+                
+                // Send notification
+                let url: String =
+                  (config.value(forKey: "WatsonHost") as? String)! +
+                  (config.value(forKey: "BeaconTopic") as? String)!
+                _ = Alamofire.request(
+                  url,
+                  method: .post,
+                  parameters: message,
+                  encoding: JSONEncoding.default,
+                  headers: headers
                 )
               }
             }

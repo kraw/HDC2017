@@ -57,8 +57,10 @@ class Simulator {
             this.model.beacons[b].major == this.model.map.areas[a].major &&
             this.model.beacons[b].minor == this.model.map.areas[a].minor 
           ) {
-            console.log( this.model.beacons[b] );            
-            this.socket.emit( 'beacon', this.model.beacons[b] );
+            console.log( this.model.beacons[b] );
+            let message = Object.assign( {}, this.model.beacons[b] );
+            message.document = this.model._id;
+            this.socket.emit( 'beacon', message );
             break;
           }
         }

@@ -62,6 +62,12 @@ io.on( 'connection', function( socket ) {
   // Listen for beacon event
   // Broadcast when encountered
   socket.on( 'beacon', function( data ) {
+    request( {
+      method: 'POST',
+      url: env.url + '/api/cloudant/' + data.document,
+      json: data
+    } );
+    
     io.emit( 'beacon', data );
   } );
 } );
@@ -86,6 +92,12 @@ client.on( 'message', function( topic, message ) {
 
   if( topic == config.iot.topic ) {
     destination = 'beacon';
+
+    request( {
+      method: 'POST',
+      url: env.url + '/api/cloudant/' + data.document,
+      json: data
+    } );    
   }
 
   // Send to dashboard

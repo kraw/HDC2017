@@ -88,7 +88,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                   "major": location.major!.intValue,
                   "minor": location.minor!.intValue,
                   "name": location.name!,
-                  "label": location.label!
+                  "label": location.label!,
+                  "document": floorplan.document!
                 ]
                 
                 // Send notification

@@ -7,6 +7,7 @@ class Floorplan:Mappable {
   var name:String?
   var uuid:String?
   var beacons:[Beacon]?
+  var document:String?
   
   required init?(map: Map) {}
   
@@ -15,6 +16,7 @@ class Floorplan:Mappable {
     name <- map["name"]
     uuid <- map["uuid"]
     beacons <- map["beacons"]
+    document <- map["_id"]
   }
   
 }

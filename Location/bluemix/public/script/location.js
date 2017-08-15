@@ -151,7 +151,10 @@ class Location {
     console.log( end );
 
     let matrix = new PF.Grid( this.model.map.matrix );
-    let finder = new PF.AStarFinder();
+    let finder = new PF.AStarFinder( {
+      allowDiagonal: true, 
+      dontCrossCorners: true
+    } );
     let path = finder.findPath( 
       start.x + Math.round( start.width / 2 ), 
       start.y + Math.round( start.height / 2 ), 

@@ -29,5 +29,39 @@ router.get( '/cloudant/:doc', function( req, res ) {
   } );
 } );
   
+router.post( '/cloudant/:doc', function( req, res ) {
+  var url = config.cloudant.database + '/' + req.params.doc;
+
+  // Retrieve document
+  request( {
+    method: 'GET',
+    url: url, 
+    auth: {
+      username: config.cloudant.key,
+      password: config.cloudant.password
+    }
+  }, function( err, result, body ) {
+    var data = JSON.parse( body );
+
+    data.history.push( {
+      major: req.body.major,
+      minor: req.body.minor,
+      visitedAt: Date.now()
+    } );
+
+    request( {
+      method: 'PUT',
+      url: url, 
+      auth: {
+        username: config.cloudant.key,
+        password: config.cloudant.password
+      },
+      json: data
+    }, function( err, result, body ) {
+      res.send( 'OK' );
+    } );
+  } );
+} );  
+
 // Export
 module.exports = router;

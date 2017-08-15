@@ -1,25 +1,33 @@
 class Location {
 
   constructor() {
+    this.index = null;
+    this.maps = null;
+    this.model = null;
+    this.token = null;
+
+    this.doTokenLoad = this.doTokenLoad.bind( this );
+    this.doMapLoad = this.doMapLoad.bind( this );    
+    this.doMapsLoad = this.doMapsLoad.bind( this );
+
     this.location = document.querySelector( '.location' );    
+    
     this.map = document.querySelector( '#map' );
+    this.map.addEventListener( 'load', evt => this.doMapImageLoad( evt ) );
+
+    this.navigation = document.querySelector( 'svg' );
+    
     this.start = document.querySelector( 'select:first-of-type' );
+    this.start.addEventListener( 'change', evt => this.doLocationChange( evt ) );
+
     this.end = document.querySelector( 'select:last-of-type' );
+    this.end.addEventListener( 'change', evt => this.doLocationChange( evt ) );
 
     this.previous = document.querySelector( 'button:first-of-type' );
     this.previous.addEventListener( 'click', evt => this.doPreviousClick( evt ) );
 
     this.next = document.querySelector( 'button:last-of-type' );
     this.next.addEventListener( 'click', evt => this.doNextClick( evt ) );
-
-    this.doTokenLoad = this.doTokenLoad.bind( this );
-    this.doMapLoad = this.doMapLoad.bind( this );    
-    this.doMapsLoad = this.doMapsLoad.bind( this );
-
-    this.index = null;
-    this.maps = null;
-    this.model = null;
-    this.token = null;
 
     this.socket = io();
     this.socket.on( 'beacon', evt => this.doBeaconMessage( evt ) );
@@ -105,12 +113,95 @@ class Location {
     }
   }
 
+  doLocationChange( evt ) {
+    var start = null;
+    var end = null;
+
+    var major = parseInt( this.start.children[this.start.selectedIndex].getAttribute( 'data-major' ) );
+    var minor = parseInt( this.start.children[this.start.selectedIndex].getAttribute( 'data-minor' ) );    
+
+    console.log( 'Start: ' + major + ' (major), ' + minor + ' (minor)' );
+
+    for( let a = 0; a < this.model.map.areas.length; a++ ) {
+      if( 
+        this.model.map.areas[a].major == major &&
+        this.model.map.areas[a].minor == minor
+      ) {
+        start = this.model.map.areas[a];
+        break;
+      }
+    }
+
+    var major = parseInt( this.end.children[this.end.selectedIndex].getAttribute( 'data-major' ) );
+    var minor = parseInt( this.end.children[this.end.selectedIndex].getAttribute( 'data-minor' ) );    
+
+    console.log( 'End: ' + major + ' (major), ' + minor + ' (minor)' );
+
+    for( let a = 0; a < this.model.map.areas.length; a++ ) {
+      if( 
+        this.model.map.areas[a].major == major &&
+        this.model.map.areas[a].minor == minor
+      ) {
+        end = this.model.map.areas[a];
+        break;
+      }
+    }
+
+    console.log( start );
+    console.log( end );
+
+    let matrix = new PF.Grid( this.model.map.matrix );
+    let finder = new PF.AStarFinder();
+    let path = finder.findPath( 
+      start.x + Math.round( start.width / 2 ), 
+      start.y + Math.round( start.height / 2 ), 
+      end.x + Math.round( end.width / 2 ), 
+      end.y + Math.round( end.height / 2 ),
+      matrix
+    );
+
+    // TODO: Path smoothing
+    console.log( path );
+
+    while( this.navigation.children.length > 0 ) {
+      this.navigation.removeChild( this.navigation.children[0] );
+    }
+
+    let d = '';
+    let ratio = this.map.clientWidth / this.model.map.width;
+    let ration = this.map.clientHeight / this.model.map.height;    
+
+    for( let p = 0; p < path.length; p++ ) {
+      if( p == 0 ) {
+        d = 'M' + ( path[p][0] * ratio ) + ',' + ( path[p][1] * ratio );
+      } else {
+        d = d + ' L' + ( path[p][0] * ratio ) + ',' + ( path[p][1] * ratio );
+      }
+    }
+
+    let element = document.createElementNS( 'http://www.w3.org/2000/svg', 'path' );
+    element.setAttributeNS( null, 'fill', 'none' );
+    element.setAttributeNS( null, 'stroke-width', 3 );
+    element.setAttributeNS( null, 'stroke', 'red' );
+    element.setAttributeNS( null, 'd', d );
+    this.navigation.appendChild( element );
+  }
+
+  doMapImageLoad( evt ) {
+    let bounds = this.map.getBoundingClientRect();
+
+    this.navigation.setAttribute( 'width', this.map.clientWidth );
+    this.navigation.setAttribute( 'height', this.map.clientHeight );
+    this.navigation.style.top = bounds.top + 'px'
+  }
+
   doMapLoad( evt ) {
     this.model = JSON.parse( this.xhr.responseText );
 
     this.previous.style.display = 'block';
     this.map.src = '/maps/' + this.model.map.vector;
     this.next.style.display = 'block';
+
     this.populate( this.start, this.model.beacons );
     this.populate( this.end, this.model.beacons );
 

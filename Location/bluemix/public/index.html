@@ -18,6 +18,7 @@
   <button id="previous"></button>
   <div id="viewport">
     <img id="map">
+    <svg></svg>
   </div>  
   <button id="next"></button>
 </div>
@@ -39,10 +40,12 @@
 
 <!-- Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.js"></script>
+<script src="lib/pathfinding-0.4.18.js"></script>
+<script src="lib/fit-curve.js"></script>
 <script src="lib/watson-speech-0.30.1.js"></script>
 
 <!-- Application -->
-<script src="script/location.js"></script>
+<script src="script/location.js" canvas="navigation"></script>
 
 </body>
 </html>

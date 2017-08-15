@@ -68,6 +68,12 @@ select {
   outline:  none;
 }
 
+svg {
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
 #directions {
   align-items: center;
   background-color: #142936;

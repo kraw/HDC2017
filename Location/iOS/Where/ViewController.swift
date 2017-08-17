@@ -6,7 +6,11 @@ import UIKit
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
   
-  @IBOutlet weak var lblLocation: UILabel!
+  @IBOutlet weak var lblUUID: UILabel!
+  @IBOutlet weak var lblMajor: UILabel!
+  @IBOutlet weak var lblMinor: UILabel!
+  @IBOutlet weak var boxMajor: UIView!
+  @IBOutlet weak var boxMinor: UIView!
   
   let CONFIGURATION_PATH = Bundle.main.path(forResource:"Config", ofType: "plist")
   
@@ -23,9 +27,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     // Configuration from property list
     config = NSDictionary(contentsOfFile: CONFIGURATION_PATH!)
 
-    // Clear and hide label
-    lblLocation.text = ""
-    lblLocation.isHidden = true
+    // Clear and hide labels
+    lblUUID.text = ""
+    lblUUID.isHidden = true
+    boxMajor.isHidden = true
+    boxMinor.isHidden = true
     
     // Location manager to watch for beacons
     manager = CLLocationManager()
@@ -63,57 +69,62 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     if beacons.count > 0 {
       // See which is closest
       for beacon in beacons {
-        // Beacon that is really close
+        // Beacon that is near
         if beacon.proximity == CLProximity.near {
           // Look for match from database
           for location in floorplan.beacons! {
             // Found match
             if location.minor! == beacon.minor {
-              // Only update if different
-              if lblLocation.text != location.name! {
-                // Change label
-                lblLocation.text = location.name!
-                
-                // Headers
-                let user: String = (config.value(forKey: "WatsonApplication") as? String)!
-                let password: String = (config.value(forKey: "WatsonToken") as? String)!
-                var headers: HTTPHeaders = [:]
-                
-                if let auth = Request.authorizationHeader(user: user, password: password ) {
-                  headers[auth.key] = auth.value
-                }
-                
-                // Broadcast location
-                let message: Parameters = [
-                  "major": location.major!.intValue,
-                  "minor": location.minor!.intValue,
-                  "name": location.name!,
-                  "label": location.label!,
-                  "document": floorplan.document!
-                ]
-                
-                // Send notification
-                let url: String =
-                  (config.value(forKey: "WatsonHost") as? String)! +
-                  (config.value(forKey: "BeaconTopic") as? String)!
-                _ = Alamofire.request(
-                  url,
-                  method: .post,
-                  parameters: message,
-                  encoding: JSONEncoding.default,
-                  headers: headers
-                )
+              // Change labels
+              lblUUID.text = floorplan.uuid!
+              lblMajor.text = location.major?.stringValue
+              lblMinor.text = location.minor?.stringValue
+              
+              // Authentication
+              // Headers
+              let user: String = (config.value(forKey: "WatsonApplication") as? String)!
+              let password: String = (config.value(forKey: "WatsonToken") as? String)!
+              var headers: HTTPHeaders = [:]
+              
+              if let auth = Request.authorizationHeader(user: user, password: password ) {
+                headers[auth.key] = auth.value
               }
+              
+              // Broadcast location
+              let message: Parameters = [
+                "major": location.major!.intValue,
+                "minor": location.minor!.intValue,
+                "name": location.name!,
+                "label": location.label!,
+                "document": floorplan.document!
+              ]
+              
+              // Send notification
+              let url: String =
+                (config.value(forKey: "WatsonHost") as? String)! +
+                (config.value(forKey: "BeaconTopic") as? String)!
+              _ = Alamofire.request(
+                url,
+                method: .post,
+                parameters: message,
+                encoding: JSONEncoding.default,
+                headers: headers
+              )
             }
           }
           
-          lblLocation.isHidden = false
+          // Show values
+          lblUUID.isHidden = false
+          boxMajor.isHidden = false
+          boxMinor.isHidden = false
         }
       }
     } else {
       // Hide and clean up
-      lblLocation.text = ""
-      lblLocation.isHidden = true
+      lblUUID.text = ""
+      lblUUID.isHidden = true
+      boxMajor.isHidden = true
+      boxMinor.isHidden = true
     }
   }
   

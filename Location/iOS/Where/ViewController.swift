@@ -28,10 +28,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     config = NSDictionary(contentsOfFile: CONFIGURATION_PATH!)
 
     // Clear and hide labels
-    lblUUID.text = ""
     lblUUID.isHidden = true
     boxMajor.isHidden = true
     boxMinor.isHidden = true
+    lblMinor.text = ""
     
     // Location manager to watch for beacons
     manager = CLLocationManager()
@@ -75,41 +75,44 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
           for location in floorplan.beacons! {
             // Found match
             if location.minor! == beacon.minor {
-              // Change labels
-              lblUUID.text = floorplan.uuid!
-              lblMajor.text = location.major?.stringValue
-              lblMinor.text = location.minor?.stringValue
-              
-              // Authentication
-              // Headers
-              let user: String = (config.value(forKey: "WatsonApplication") as? String)!
-              let password: String = (config.value(forKey: "WatsonToken") as? String)!
-              var headers: HTTPHeaders = [:]
-              
-              if let auth = Request.authorizationHeader(user: user, password: password ) {
-                headers[auth.key] = auth.value
+              // Only update if different
+              if lblMinor.text != beacon.minor.stringValue {
+                // Change labels
+                lblUUID.text = floorplan.uuid!
+                lblMajor.text = location.major?.stringValue
+                lblMinor.text = location.minor?.stringValue
+                
+                // Authentication
+                // Headers
+                let user: String = (config.value(forKey: "WatsonApplication") as? String)!
+                let password: String = (config.value(forKey: "WatsonToken") as? String)!
+                var headers: HTTPHeaders = [:]
+                
+                if let auth = Request.authorizationHeader(user: user, password: password ) {
+                  headers[auth.key] = auth.value
+                }
+                
+                // Broadcast location
+                let message: Parameters = [
+                  "major": location.major!.intValue,
+                  "minor": location.minor!.intValue,
+                  "name": location.name!,
+                  "label": location.label!,
+                  "document": floorplan.document!
+                ]
+                
+                // Send notification
+                let url: String =
+                  (config.value(forKey: "WatsonHost") as? String)! +
+                  (config.value(forKey: "BeaconTopic") as? String)!
+                _ = Alamofire.request(
+                  url,
+                  method: .post,
+                  parameters: message,
+                  encoding: JSONEncoding.default,
+                  headers: headers
+                )
               }
-              
-              // Broadcast location
-              let message: Parameters = [
-                "major": location.major!.intValue,
-                "minor": location.minor!.intValue,
-                "name": location.name!,
-                "label": location.label!,
-                "document": floorplan.document!
-              ]
-              
-              // Send notification
-              let url: String =
-                (config.value(forKey: "WatsonHost") as? String)! +
-                (config.value(forKey: "BeaconTopic") as? String)!
-              _ = Alamofire.request(
-                url,
-                method: .post,
-                parameters: message,
-                encoding: JSONEncoding.default,
-                headers: headers
-              )
             }
           }
           
@@ -121,10 +124,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
       }
     } else {
       // Hide and clean up
-      lblUUID.text = ""
       lblUUID.isHidden = true
       boxMajor.isHidden = true
       boxMinor.isHidden = true
+      lblMinor.text = ""      
     }
   }
   

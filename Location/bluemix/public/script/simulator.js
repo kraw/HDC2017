@@ -21,13 +21,13 @@ class Simulator {
 
     this.xhr = new XMLHttpRequest();
     this.xhr.addEventListener( 'load', this.doMapsLoad );
-    this.xhr.open( 'GET', '/api/cloudant/all', true );
+    this.xhr.open( 'GET', '/api/cloudant/maps', true );
     this.xhr.send( null );
   }
 
   load( id ) {
     this.xhr.addEventListener( 'load', this.doMapLoad );
-    this.xhr.open( 'GET', '/api/cloudant/' + id, true );
+    this.xhr.open( 'GET', '/api/cloudant/map/' + id, true );
     this.xhr.send( null );
   }  
 

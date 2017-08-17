@@ -42,7 +42,7 @@ class Location {
     this.location.style.display = 'none';
 
     this.xhr.addEventListener( 'load', this.doMapLoad );
-    this.xhr.open( 'GET', '/api/cloudant/' + id, true );
+    this.xhr.open( 'GET', '/api/cloudant/map/' + id, true );
     this.xhr.send( null );
   }
 
@@ -246,7 +246,7 @@ class Location {
     this.xhr.removeEventListener( 'load', this.doTokenLoad );
 
     this.xhr.addEventListener( 'load', this.doMapsLoad );
-    this.xhr.open( 'GET', '/api/cloudant/all', true );
+    this.xhr.open( 'GET', '/api/cloudant/maps', true );
     this.xhr.send( null );
   }
 

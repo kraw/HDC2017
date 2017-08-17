@@ -4,12 +4,8 @@ var request = require( 'request' );
 // Router
 var router = express.Router();
 
-router.get( '/cloudant/:doc', function( req, res ) {
-  var url = config.cloudant.database + '/' + req.params.doc;
-
-  if( req.params.doc == 'all' ) {
-    url = config.cloudant.database + '/_design/location/_view/maps';
-  }
+router.get( '/cloudant/maps', function( req, res ) {
+  var url = config.cloudant.database + '/_design/location/_view/maps';
 
   // Retrieve document
   request( {
@@ -20,16 +16,28 @@ router.get( '/cloudant/:doc', function( req, res ) {
       password: config.cloudant.password
     }
   }, function( err, result, body ) {
-    if( req.params.doc == 'all' ) {
-      var data = JSON.parse( body );
-      res.json( data.rows );
-    } else {
-      res.send( body );
+    var data = JSON.parse( body );
+    res.json( data.rows );
+  } );  
+} );
+
+router.get( '/cloudant/map/:doc', function( req, res ) {
+  var url = config.cloudant.database + '/' + req.params.doc;
+
+  // Retrieve document
+  request( {
+    method: 'GET',
+    url: url, 
+    auth: {
+      username: config.cloudant.key,
+      password: config.cloudant.password
     }
+  }, function( err, result, body ) {
+    res.send( body );
   } );
 } );
   
-router.post( '/cloudant/:doc', function( req, res ) {
+router.post( '/cloudant/map/:doc', function( req, res ) {
   var url = config.cloudant.database + '/' + req.params.doc;
 
   // Retrieve document

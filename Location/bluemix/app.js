@@ -64,7 +64,7 @@ io.on( 'connection', function( socket ) {
   socket.on( 'beacon', function( data ) {
     request( {
       method: 'POST',
-      url: env.url + '/api/cloudant/' + data.document,
+      url: env.url + '/api/cloudant/map/' + data.document,
       json: data
     } );
     
@@ -95,7 +95,7 @@ client.on( 'message', function( topic, message ) {
 
     request( {
       method: 'POST',
-      url: env.url + '/api/cloudant/' + data.document,
+      url: env.url + '/api/cloudant/map/' + data.document,
       json: data
     } );    
   }

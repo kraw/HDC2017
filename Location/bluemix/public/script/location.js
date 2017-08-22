@@ -10,8 +10,15 @@ class Location {
     this.doMapLoad = this.doMapLoad.bind( this );    
     this.doMapsLoad = this.doMapsLoad.bind( this );
 
+    this.svg = document.querySelector( 'svg' );
+    this.peak = document.querySelector( '#peak' );
+    this.columns = document.querySelector( '#columns' );
+
     this.location = document.querySelector( '.location' );    
-    
+
+    this.brand = document.querySelector( '#branding' );
+    this.brand.addEventListener( 'click', evt => this.doBrandClick( evt ) );
+
     this.map = document.querySelector( '#map' );
     this.map.addEventListener( 'load', evt => this.doMapImageLoad( evt ) );
 
@@ -38,6 +45,84 @@ class Location {
     this.xhr.send( null );
   }
 
+  chart() {
+    // Clean up previous chart
+    while( this.columns.childNodes.length > 0 ) {
+      this.columns.removeChild( this.columns.childNodes[0] );
+    }
+
+    // Current day usage
+    let today = new Date();
+    today.setHours( 0 );
+    today.setMinutes( 0 );
+    today.setSeconds( 0 );
+    today.setMilliseconds( 0 );
+
+    // TODO: Magic number much?
+    // TODO: svg.clientWidth reporting different number from actual width
+    let width = 175 / this.model.beacons.length;
+    let max = -1;
+    
+    for( let b = 0; b < this.model.beacons.length; b++ ) {
+      console.log( this.model.beacons[b] );
+      // Column label
+      let beacon = document.createElementNS( 'http://www.w3.org/2000/svg', 'text' );
+      beacon.setAttributeNS( null, 'x', ( b * width ) + ( width / 2 ) );
+      beacon.setAttributeNS( null, 'y', 70 );
+      beacon.setAttributeNS( null, 'fill', 'rgba( 255, 255, 255, 0.50 )' );
+      beacon.setAttributeNS( null, 'font-size', '10px' );
+      beacon.setAttributeNS( null, 'font-weight', '100' );
+      beacon.setAttributeNS( null, 'font-family', 'Roboto' );
+      beacon.setAttributeNS( null, 'text-anchor', 'middle' );
+      beacon.textContent = this.model.beacons[b].minor;
+      this.columns.appendChild( beacon );
+
+      // Number of visits
+      let count = 0;
+      
+      // Look through history
+      for( let h = 0; h < this.model.history.length; h++ ) {
+        // Increment matches
+        if( 
+          this.model.beacons[b].major == this.model.history[h].major &&
+          this.model.beacons[b].minor == this.model.history[h].minor &&
+          this.model.history[h].visitedAt > today.getTime()
+        ) {
+          count = count + 1;
+        }
+      }
+
+      // Also track largest
+      if( count > max ) {
+        max = count;
+      }
+      
+      // If there is data to chart
+      if( count > 0 ) {
+        // Build column
+        beacon = document.createElementNS( 'http://www.w3.org/2000/svg', 'rect' );
+        beacon.setAttributeNS( null, 'x', ( b * width ) + ( width / 2 ) - ( ( width / 3 ) / 2 ) );
+        beacon.setAttributeNS( null, 'y', 59 - ( ( 58 / max ) * count ) );
+        beacon.setAttributeNS( null, 'width', width / 3 );
+        beacon.setAttributeNS( null, 'height', ( 58 / max ) * count );
+        beacon.setAttributeNS( null, 'fill', 'white' );
+        beacon.setAttributeNS( null, 'stroke', 'none' );
+        beacon.setAttributeNS( null, 'rx', 2 );
+        beacon.setAttributeNS( null, 'ry', 2 );
+        this.columns.appendChild( beacon );
+      }
+    }
+
+    // If there is a maximum value
+    // Which means there is some data
+    if( max >= 0 ) {
+      this.peak.textContent = max;
+    } else {
+      // No data available
+      this.peak.textContent = '0';
+    }
+  }
+
   load( id ) {
     this.location.style.display = 'none';
 
@@ -61,6 +146,16 @@ class Location {
   }
 
   doBeaconMessage( evt ) {
+    // Update history
+    // Chart new history
+    evt.visitedAt = Date.now();
+    this.model.history.push( {
+      major: evt.major,
+      minor: evt.minor,
+      visitedAt: Date.now()
+    } );
+    this.chart();
+
     // Find which beacon was triggered
     for( let a = 0; a < this.model.map.areas.length; a++ ) {
       if( 
@@ -111,6 +206,10 @@ class Location {
         break;
       }
     }
+  }
+
+  doBrandClick( evt ) {
+    this.brand.classList.toggle( 'hover' );
   }
 
   doLocationChange( evt ) {
@@ -207,6 +306,8 @@ class Location {
 
     this.populate( this.start, this.model.beacons );
     this.populate( this.end, this.model.beacons );
+
+    this.chart();
 
     this.xhr.removeEventListener( 'load', this.doMapLoad );    
   }

@@ -82,7 +82,7 @@ svg {
   top: 16px;
 }
 
-#branding:hover .flipper, #branding.hover .flipper {
+#branding.flipper, #branding.hover .flipper {
   transform: rotateY( 180deg );
 }
 

@@ -1,0 +1,197 @@
+<html>
+<head>
+
+<title>Schwag Trader</title>
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+
+<style>
+body {
+  align-items: center;
+  background-color: #ecf2f2;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;  
+  justify-content: center;
+}
+
+button.action {
+  background-color: #F44336;
+  background-image: url( add.white.svg );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  border: none;
+  border-radius: 56px;
+  bottom: 16px;
+  box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );
+  height: 56px;
+  outline: none;
+  position: absolute;
+  right: 16px;
+  width: 56px; 
+}
+
+button.flat {
+  background: none;
+  border: none;
+  color: #396aac;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 36px;
+  margin: 8px 0 0 16px;
+  outline: none;
+  padding: 0 16px 0 16px;
+  text-transform: uppercase;
+}
+
+button.raised {
+  background: none;
+  background-color: #396aac;
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 36px;
+  margin: 8px 0 0 16px;
+  outline: none;
+  padding: 0 16px 0 16px;
+  text-transform: uppercase;
+}
+
+input {
+  background: none;
+  border: none;
+  border-bottom: solid 1px rgba( 0, 0, 0, 0.42 );
+  color: rgba( 0, 0, 0, 0.87 );
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  margin: 0 0 8px 0;
+  outline: none;
+  padding: 16px 0 8px 0;
+  width: 250px;
+}
+
+input:focus {
+  border-bottom: solid 2px #396aac;
+  padding: 16px 0 7px 0;  
+}
+
+::-webkit-input-placeholder {
+  color: rgba( 0, 0, 0, 0.38 );
+}
+
+#capture {
+  background-color: white;
+  box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );
+  display: flex;
+  flex-direction: column;
+  width: 480px;  
+}
+
+#capture > div {
+  display: flex;
+  flex-direction: row;
+}
+
+#login {
+  display: flex;
+  flex-direction: column;
+}
+
+#login > div {
+  display: flex;
+  flex-direction: row;
+}
+
+.helper {
+  color: rgba( 0, 0, 0, 0.54 );
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  width: 250px;
+}
+</style>
+
+</head>
+<body>
+
+<!-- Login -->
+<div id="login">
+  <div>
+    <input placeholder="Email">
+    <button class="raised">Login</button>
+  </div>
+  <p class="helper">Unknown accounts will be created.</p>      
+</div>
+
+<!-- Capture -->
+<div id="capture">
+  <div style="position: relative;">
+    <video></video>      
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 75px; background-color: rgba( 255, 255, 255, 0.25 );"></div>
+  </div>
+  <div style="margin: 16px 16px 0 16px;">
+    <input placeholder="Name" style="flex-grow: 1;">
+    <input placeholder="Value" style="margin-left: 16px; width: 100px;">      
+  </div>
+  <div style="margin: 8px 16px 16px 16px; justify-content: flex-end;">
+    <button class="flat">Cancel</button>        
+    <button class="flat">Add</button>    
+  </div>
+</div>
+
+<!-- Action -->
+<button class="action"></button>
+
+<!-- Application -->
+<script>
+class Capture {
+  constructor() {
+    this.streaming = false;
+
+    this.root = document.querySelector( '#capture' );
+
+    this.video = this.root.querySelector( 'video' );
+    this.video.addEventListener( 'canplay', evt => this.doPlay( evt ) );
+  }
+
+  show() {
+    navigator.mediaDevices.getUserMedia( { 
+      video: true, 
+      audio: false 
+    } )
+    .then( stream => {
+      this.video.srcObject = stream;
+      this.video.play();
+    } )
+    .catch( function( err ) {
+      console.log( err );
+    } );
+  }
+
+  doPlay( evt ) {
+    if( !this.streaming ) {
+      let height = this.video.videoHeight / ( this.video.videoWidth / 480 );
+      
+      this.video.setAttribute( 'width', 480 );
+      this.video.setAttribute( 'height', height );
+
+      // canvas.setAttribute('width', width);
+      // canvas.setAttribute('height', height);
+
+      this.streaming = true;
+    }
+  }
+}
+</script>
+
+<script src="login.js"></script>
+<script src="trader.js"></script>
+
+</body>
+</html>

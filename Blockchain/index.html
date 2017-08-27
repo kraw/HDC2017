@@ -63,6 +63,10 @@ button.raised {
   text-transform: uppercase;
 }
 
+canvas {
+  display: none;
+}
+
 input {
   background: none;
   border: none;
@@ -87,6 +91,7 @@ input:focus {
 
 #capture {
   background-color: white;
+  border-radius: 2px;
   box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );
   display: flex;
   flex-direction: column;
@@ -132,7 +137,7 @@ input:focus {
 <!-- Capture -->
 <div id="capture">
   <div style="position: relative;">
-    <video></video>      
+    <video style="border-top-left-radius: 2px; border-top-right-radius: 2px;"></video>      
     <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 75px; background-color: rgba( 255, 255, 255, 0.25 );"></div>
   </div>
   <div style="margin: 16px 16px 0 16px;">
@@ -143,6 +148,7 @@ input:focus {
     <button class="flat">Cancel</button>        
     <button class="flat">Add</button>    
   </div>
+  <canvas></canvas>
 </div>
 
 <!-- Action -->
@@ -181,8 +187,8 @@ class Capture {
       this.video.setAttribute( 'width', 480 );
       this.video.setAttribute( 'height', height );
 
-      // canvas.setAttribute('width', width);
-      // canvas.setAttribute('height', height);
+      canvas.setAttribute( 'width', 480 );
+      canvas.setAttribute( 'height', height );
 
       this.streaming = true;
     }

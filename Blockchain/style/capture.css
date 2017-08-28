@@ -1,0 +1,14 @@
+#capture {
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  width: 480px;  
+}
+
+#capture > div {
+  display: flex;
+  flex-direction: row;
+}

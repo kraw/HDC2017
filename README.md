@@ -23,7 +23,7 @@ Hands-on activities include:
 - Interact with blockchain via REST
 - Trade physical assets with other attendees via blockchain
 
-Session: [Indoor Location with Beacons] (http://sched.co/B9DA)
+Session: [Indoor Location with Beacons](http://sched.co/B9DA)
 
 Having a highly capable and accurate GPS in everybody's pocket has fundamentally changed the way we live, with broader impacts like self-driving cars, yet to come. The moment you step inside the HDC conference center however, all that technology is virtually useless. In order to solve this problem, various vendors, from Apple to Google, and many others, have been implementing indoor location technologies, predominantly via beacons.
 

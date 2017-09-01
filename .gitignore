@@ -2,3 +2,4 @@ Config.plist
 *.framework
 node_modules
 config.json
+*.log

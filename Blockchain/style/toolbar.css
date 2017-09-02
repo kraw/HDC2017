@@ -1,12 +1,12 @@
 #toolbar {
   background-color: #396aac;
   box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );    
+  display: none;
   height: 56px;
   left: 0;
   position: absolute;
   right: 0;
-  top: -63px;
-  transition: top 1s;
+  top: 0;
 }
 
 #toolbar > div.items {

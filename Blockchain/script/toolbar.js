@@ -7,11 +7,11 @@ class Toolbar {
   }
 
   hide() {
-    this.root.style.top = '-63px';
+    this.root.style.display = 'none';
   }
 
   show() {
-    this.root.style.top = 0;    
+    this.root.style.display = 'block';    
   }
 
   doLogout( evt ) {

@@ -1,80 +1,52 @@
 <html>
 <head>
 
-<title>Schwag Trader</title>
+<title>Vehicle Auction</title>
 
 <!-- Google Fonts -->
 <!-- Roboto -->
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 
 <!-- Styles -->
-<link href="style/capture.css" rel="stylesheet">
-<link href="style/list.css" rel="stylesheet">
 <link href="style/login.css" rel="stylesheet">
-<link href="style/trader.css" rel="stylesheet">
+<link href="style/toolbar.css" rel="stylesheet">
+<link href="style/auction.css" rel="stylesheet">
 
 </head>
 <body>
 
 <!-- Login -->
 <div id="login">
-  <div>
-    <input placeholder="Email">
-    <button class="raised">Login</button>
+  <div class="brand"></div>
+  <div class="tabs">
+    <button class="selected">Login</button>
+    <button>Sign Up</button>
   </div>
-  <p class="helper">Unknown accounts will be created.</p>      
+  <div class="signup">
+    <input placeholder="First name">    
+    <div class="spacer"></div>
+    <input placeholder="Last name">
+  </div>
+  <div class="email">
+    <input placeholder="Email">
+  </div>
+  <div class="submit">
+    <button class="flat">Login</button>
+  </div>
 </div>
 
-<!-- Assets -->
-<div id="list">
-    <div class="item">
-        <div class="footer">
-          <div class="details">
-            <p></p>
-            <p></p>
-          </div>
-          <button></button>
-        </div>
-      </div>  
-</div>
-
-<!-- List template -->
-<div class="item template">
-  <div class="footer">
-    <div class="details">
-      <p></p>
-      <p></p>
-    </div>
+<!-- Toolbar -->
+<div id="toolbar">
+  <div class="items">
+    <p>Vehicle Auction</p>    
     <button></button>
   </div>
-</div>  
-
-<!-- Capture -->
-<div id="capture">
-  <div style="position: relative;">
-    <video style="border-top-left-radius: 2px; border-top-right-radius: 2px;"></video>      
-    <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 75px; background-color: rgba( 255, 255, 255, 0.25 );"></div>
-  </div>
-  <div style="margin: 16px 16px 0 16px;">
-    <input placeholder="Name" style="flex-grow: 1;">
-    <input placeholder="Value" style="margin-left: 16px; width: 100px;">      
-  </div>
-  <div style="margin: 8px 16px 16px 16px; justify-content: flex-end;">
-    <button class="flat">Cancel</button>        
-    <button class="flat">Add</button>    
-  </div>
-  <canvas></canvas>
-</div>  
-
-<!-- Action -->
-<button class="action"></button>
+</div>
 
 <!-- Application -->
-<script src="script/model.js"></script>
-<script src="script/capture.js"></script>
-<script src="script/list.js"></script>
 <script src="script/login.js"></script>
-<script src="script/trader.js"></script>
+<script src="script/toolbar.js"></script>
+<script src="script/auction.js"></script>
 
 </body>
 </html>

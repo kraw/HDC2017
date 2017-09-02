@@ -1,20 +1,21 @@
 class Login {
   constructor() {
-    // Removable listeners
-    this.doCreate = this.doCreate.bind( this );
-    this.doParticipant = this.doParticipant.bind( this );
+    this.state = Login.LOGIN;
 
-    // Elements
     this.root = document.querySelector( '#login' );
+
+    this.tabs = document.querySelectorAll( 'div.tabs > button' );
+    this.tabs[0].addEventListener( 'click', evt => this.doTab( evt ) );
+    this.tabs[1].addEventListener( 'click', evt => this.doTab( evt ) );    
+
+    this.signup = this.root.querySelector( 'div.signup' );
+    this.first = this.signup.querySelector( 'input:first-of-type' );
+    this.last = this.signup.querySelector( 'input:last-of-type' );
+
+    this.email = this.root.querySelector( 'div.email > input' );
     
-    this.input = this.root.querySelector( 'input' );
-    this.input.addEventListener( 'keypress', evt => this.doInput( evt ) );
-
-    this.button = this.root.querySelector( 'button' );
-    this.button.addEventListener( 'click', evt => this.doLogin( evt ) );
-
-    // Data
-    this.xhr = new XMLHttpRequest();
+    this.submit = this.root.querySelector( 'div.submit > button' );
+    this.submit.addEventListener( 'click', evt => this.doSubmit( evt ) );
   }
 
   hide() {
@@ -25,68 +26,40 @@ class Login {
     this.root.style.display = 'flex';
   }
 
-  // Emit event
-  // Send participant details
-  success( participant ) {
-    this.root.dispatchEvent( new CustomEvent( 'login', {
-      detail: {
-        email: 'krhoyt@us.ibm.com'
-      }
-    } ) );
-  }
-
-  // Participant creation success
-  doCreate( evt ) {
-    let data = JSON.parse( this.xhr.responseText );
-
-    console.log( data );
-
-    // Clean up
-    this.xhr.removeEventListener( 'load', this.doCreate );
-
-    // TODO: Raise login event    
-  }
-
-  // Watch for enter key
-  doInput( evt ) {
-    if( evt.keyCode == 13 ) {
-      this.doLogin( evt );
-    }
-  }
-
-  // Start login process
-  doLogin( evt ) {
-    if( this.input.value.trim().length > 0 ) {
-      // Load participants
-      this.xhr.addEventListener( 'load', this.doParticipant );
-      this.xhr.open( 'GET', 'test.json', true );
-      this.xhr.send( null );
-    }
-  }
-
-  // Login lookup response
-  doParticipant( evt ) {
-    let data = JSON.parse( this.xhr.responseText );
-    let found = false;
-
-    console.log( data );
-
-    // Clean up
-    this.xhr.removeEventListener( 'load', this.doParticipant );
-
-    // Look for match
-    for( let p = 0; p < 1; p++ ) {
-      found = true;
-    }
-
-    if( !found ) {
-      // Create
-      this.xhr.addEventListener( 'load', this.doCreate );
-      this.xhr.open( 'GET', 'test.json', true );
-      this.xhr.send( null );
+  doSubmit( evt ) {
+    if( this.state == Login.LOGIN ) {
+      this.root.dispatchEvent( new CustomEvent( Login.LOGIN_EVENT, {
+        detail: {
+          email: this.email.value.trim()
+        }
+      } ) );
     } else {
-      // Success
-      this.success();
+      console.log( 'Sign up.' );
+    }
+  }
+
+  doTab( evt ) {
+    for( let b = 0; b < this.tabs.length; b++ ) {
+      if( evt.target == this.tabs[b] ) {
+        this.tabs[b].classList.add( 'selected' );
+      } else {
+        this.tabs[b].classList.remove( 'selected' );
+      }
+    }
+
+    if( evt.target.innerHTML == Login.SIGN_UP ) {
+      this.signup.classList.add( 'show' );
+      this.submit.innerHTML = Login.SIGN_UP;     
+      this.state = Login.SIGN_UP;       
+    } else {
+      this.signup.classList.remove( 'show' );
+      this.submit.innerHTML = Login.LOGIN;            
+      this.state = Login.LOGIN;             
     }
   }
 }
+
+Login.LOGIN = 'Login';
+Login.LOGIN_EVENT = 'login';
+Login.SIGN_UP = 'Sign Up';
+Login.SIGN_UP_EVENT = 'signup';

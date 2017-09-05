@@ -4,10 +4,12 @@ class Auction {
     this.login.root.addEventListener( Login.LOGIN_EVENT, evt => this.doLogin( evt ) );
     this.login.root.addEventListener( Login.SIGN_UP_EVENT, evt => this.doSignUp( evt ) );
 
-    this.toolbar = new Toolbar();
-    this.toolbar.root.addEventListener( Toolbar.LOGOUT_EVENT, evt => this.doLogout( evt ) );
+    // this.toolbar = new Toolbar();
+    // this.toolbar.root.addEventListener( Toolbar.LOGOUT_EVENT, evt => this.doLogout( evt ) );
 
-    this.table = new Table();
+    // this.table = new Table();
+
+    this.auction = document.querySelector( '#auction' );
 
     this.action = document.querySelector( 'button.action' );
 
@@ -17,15 +19,16 @@ class Auction {
   doLogin( evt ) {
     console.log( evt.detail );
     this.login.hide();
-    this.toolbar.show();
-    this.table.show();
+    // this.toolbar.show();
+    // this.table.show();
+    this.auction.style.display = 'flex';
     this.action.style.display = 'block';
   }
 
   doLogout( evt ) {
     this.action.style.display = 'none';    
-    this.toolbar.hide();
-    this.table.hide();
+    // this.toolbar.hide();
+    // this.table.hide();
     this.login.show();    
   }
 

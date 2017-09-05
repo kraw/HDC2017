@@ -10,4 +10,3 @@ function tradeSchwag( tx ) {
       return registry.update( tx.item );
     } );
   }
- 

@@ -2,8 +2,11 @@
   background-color: white;
   border-radius: 2px;
   box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );  
-  display: flex;
+  display: none;
   flex-direction: column;
+  left: 0;
+  position: absolute;
+  top: 0;
   width: 400px;
 }
 

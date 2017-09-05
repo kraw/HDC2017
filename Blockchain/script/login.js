@@ -23,7 +23,11 @@ class Login {
   }
 
   show() {
+    this.root.style.visibility = 'hidden';
     this.root.style.display = 'flex';
+    this.root.style.left = Math.round( ( window.innerWidth - this.root.clientWidth ) / 2 ) + 'px';
+    this.root.style.top = Math.round( ( window.innerHeight - this.root.clientHeight ) / 2 ) + 'px';    
+    this.root.style.visibility = 'visible';
   }
 
   doSubmit( evt ) {

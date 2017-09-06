@@ -1,0 +1,40 @@
+body {
+  background-color: #4178be;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;       
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+button {
+  background: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  border: none;  
+  color: white;
+  display: none;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  width: 56px;
+}
+
+button:first-of-type {
+  background-image: url( '/img/left.svg' );
+}
+
+button:last-of-type {
+  background-image: url( '/img/right.svg' );
+}
+
+#viewport {
+  margin: 50px 25px 50px 25px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0.75;
+  justify-content: center;
+  position: relative;
+}

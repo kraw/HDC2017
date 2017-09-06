@@ -3,3 +3,4 @@ Config.plist
 node_modules
 config.json
 *.log
+composer-logs

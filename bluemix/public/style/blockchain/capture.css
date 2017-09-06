@@ -1,0 +1,47 @@
+#capture {
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  width: 480px;  
+}
+
+#capture > div {
+  display: flex;
+  flex-direction: row;
+}
+
+#capture > .stream {
+  position: relative;  
+}
+
+#capture > .stream > canvas {
+  display: none;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+#capture > .stream > video {
+  border-top-left-radius: 2px; 
+  border-top-right-radius: 2px;  
+}
+
+#capture > .field {
+  margin: 16px 16px 0 16px;
+}
+
+#capture > .commands {
+  justify-content: flex-end;    
+  margin: 8px 16px 16px 16px; 
+}
+
+#capture > .commands > div.spacer {
+  flex-grow: 1;
+}
+
+#capture > .commands > button:first-of-type {
+  margin-left: 0;
+}

@@ -1,0 +1,64 @@
+#login {
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.26 );  
+  display: none;
+  flex-direction: column;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 400px;
+}
+
+#login > .brand {
+  background-image: url( /img/blockchain/car.gif );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  justify-content: flex-end;
+  width: 400px;
+}
+
+#login > .brand > p {
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 34px;
+  margin: 0 0 0 16px;
+  padding: 0 0 16px 0;
+}
+
+#login > div.email {
+  display: flex;
+  flex-direction: row;
+  padding: 16px 16px 0 16px;
+}
+
+#login > div.signup {
+  display: flex;
+  flex-direction: row;
+  height: 0;
+  opacity: 1;
+  overflow: hidden;
+  padding: 0 16px 0 16px;
+  transition: height 1s, opacity 2s, padding-top 1s;  
+}
+
+#login > div.signup.show {
+  height: 52px;
+  opacity: 1;
+  padding: 16px 16px 0 16px;
+}
+
+#login > div.submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 16px 16px 16px 0;
+}

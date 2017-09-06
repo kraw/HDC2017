@@ -1,0 +1,8 @@
+#current {
+  align-items: center;
+  background: linear-gradient( to right, #1d364a 0%, #3f76c1 35%, #3f76c1 65%, #1d364a 100% ); 
+  display: flex;
+  flex-direction: row;    
+  flex-grow: 1; 
+  justify-content: center; 
+}

@@ -1,3 +1,4 @@
+composer archive create -a dist/carauction-network.bna --sourceType dir --sourceName .
 composer network deploy -a carauction-network.bna -p hlfv1 -i PeerAdmin -s randomString
 composer network ping -n carauction-network -p hlfv1 -i admin -s adminpw
 composer-rest-server -p hlfv1 -n carauction-network -i admin -s adminpw -N never -w

@@ -23,11 +23,11 @@ button {
 }
 
 button:first-of-type {
-  background-image: url( '/img/left.svg' );
+  background-image: url( '/img/location/left.svg' );
 }
 
 button:last-of-type {
-  background-image: url( '/img/right.svg' );
+  background-image: url( '/img/location/right.svg' );
 }
 
 #viewport {

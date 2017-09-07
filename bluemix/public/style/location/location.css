@@ -40,17 +40,17 @@ button {
 }
 
 button:first-of-type {
-  background-image: url( '/img/left.svg' );
+  background-image: url( '/img/location/left.svg' );
 }
 
 button:last-of-type {
-  background-image: url( '/img/right.svg' );
+  background-image: url( '/img/location/right.svg' );
 }
 
 select {
   -webkit-appearance: none;  
   background: none;
-  background-image: url( '/img/drop.down.svg' );
+  background-image: url( '/img/location/drop.down.svg' );
   background-position: right center;
   background-repeat: no-repeat;
   background-size: 24px;  
@@ -154,7 +154,7 @@ svg {
 }
 
 .front {
-  background-image: url( /img/ibm.svg );
+  background-image: url( /img/location/ibm.svg );
   background-position: center;
   background-repeat: no-repeat;
   background-size: auto 25px;

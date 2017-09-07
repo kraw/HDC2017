@@ -199,7 +199,7 @@ class Location {
 
         // Say where we are
         WatsonSpeech.TextToSpeech.synthesize( {
-          text: 'Kevin, you are in ' + evt.label + '.',
+          text: 'Kevin, you are ' + evt.label + '.',
           token: this.token
         } );        
 

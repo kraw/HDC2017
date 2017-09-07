@@ -69,6 +69,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     if beacons.count > 0 {
       // See which is closest
       for beacon in beacons {
+        print(beacon)
         // Beacon that is near
         if beacon.proximity == CLProximity.near {
           // Look for match from database

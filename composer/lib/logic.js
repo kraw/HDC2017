@@ -102,3 +102,39 @@ function makeOffer(offer) {
             return vehicleListingRegistry.update(listing);
         });
 }
+
+/**
+ * Open the bidding for a vehicle listing
+ * @param {org.acme.vehicle.auction.OpenBidding} vehicle - the openBidding transaction
+ * @transaction
+ */
+function openBidding(openBidding) {
+	var listing = null;
+  
+	return getAssetRegistry( 'org.acme.vehicle.auction.VehicleListing' )
+		.then( function( registry ) {
+			var factory = getFactory();
+			listing = factory.newResource(
+				'org.acme.vehicle.auction', 
+				'VehicleListing', 
+				'HDC_BID_' + Math.round( Math.random() * 1000 )
+			);
+			listing.reservePrice = ( Math.random() * 5000 ).toFixedNumber( 2, 10 );
+			listing.state = 'FOR_SALE';
+			listing.vehicle = openBidding.asset;
+      
+			return registry.add( listing );
+		} ).then( function() {
+			var event = getFactory().newEvent(
+				'org.acme.vehicle.auction', 
+				'OpenEvent'
+			);
+			event.listing = listing;
+			emit( event );
+		} );     
+}
+
+Number.prototype.toFixedNumber = function( x, base ) {
+		var pow = Math.pow( base || 10, x );
+		return +( Math.round( this * pow ) / pow );
+}

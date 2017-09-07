@@ -46,3 +46,12 @@ transaction Offer {
 transaction CloseBidding {
   --> VehicleListing listing
 }
+
+transaction OpenBidding {
+  --> Vehicle asset
+}
+
+event OpenEvent {
+  --> VehicleListing listing
+	o String vin
+}

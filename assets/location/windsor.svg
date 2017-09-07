@@ -1,1 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 527.67 248.45"><defs><style>.cls-1{fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:4px;}.cls-2{fill:#fff;}</style></defs><title>windsor</title><g id="Layer_2" data-name="Layer 2"><polyline class="cls-1" points="10.33 110.78 15.33 110.78 15.33 96.78 2 96.78 2 6.11 51.67 6.11 51.67 0"/><line class="cls-1" x1="525.67" y1="5.45" x2="525.67" y2="246.45"/><polyline class="cls-1" points="477 0 477 5.45 525.67 5.45 525.67 246.45 2 246.45 2 155.45 15.33 155.45 15.33 142.11 10.33 142.11"/><polyline class="cls-1" points="345.67 0 345.67 5.45 444.67 5.45 444.67 0"/><line class="cls-1" x1="395.17" y1="11.78" x2="395.17" y2="5.45"/><polyline class="cls-1" points="214.17 0 214.17 5.45 313.17 5.45 313.17 0"/><line class="cls-1" x1="264.18" y1="11.78" x2="264.18" y2="5.45"/><polyline class="cls-1" points="82.92 0 82.92 5.45 182.17 5.45 182.17 0"/><line class="cls-1" x1="132.54" y1="11.78" x2="132.54" y2="5.45"/><line class="cls-1" x1="264.18" y1="240.03" x2="264.18" y2="246.45"/></g><g id="Layer_3" data-name="Layer 3"><rect class="cls-2" x="63" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="86" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="108.33" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="130.67" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="153.33" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="176" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="198.33" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="221.67" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="63" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="86" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="108.33" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="130.67" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="153.33" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="176" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="198.33" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="221.67" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="289" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="312" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="334.33" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="356.67" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="379.33" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="402" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="424.33" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="447.67" y="40.78" width="8.7" height="72.28"/><rect class="cls-2" x="289" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="312" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="334.33" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="356.67" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="379.33" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="402" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="424.33" y="140.45" width="8.7" height="90"/><rect class="cls-2" x="447.67" y="140.45" width="8.7" height="90"/></g></svg>
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 342.84 248.15">
+	<defs>
+		<style>.cls-1,.cls-2{fill:none;stroke-miterlimit:10;}.cls-1{stroke:#ed1c24;stroke-width:4.25px;}.cls-2{stroke:#fff;stroke-width:4px;}.cls-3{fill:#fff;}</style>
+	</defs>
+	<title>windsor</title>
+	<g id="Layer_2" data-name="Layer 2">
+		<polyline class="cls-2" points="48.39 110.78 53.39 110.78 53.39 96.78 40.05 96.78 40.05 6.11 89.72 6.11 89.72 0"/>
+		<polyline class="cls-2" points="122.46 0 122.46 5.45 221.71 5.45 221.71 0"/>
+		<line class="cls-2" x1="172.08" y1="11.78" x2="172.08" y2="5.45"/>
+		<polyline class="cls-2" points="302.23 239.73 302.23 246.15 40.05 246.15 40.05 155.15 53.39 155.15 53.39 141.82 48.39 141.82"/>
+		<polyline class="cls-2" points="252.54 0.72 252.54 6.17 302.55 6.17 302.55 12.5"/>
+		<line class="cls-2" x1="302.55" y1="12.5" x2="302.23" y2="239.73"/>
+	</g>
+	<g id="Layer_3" data-name="Layer 3">
+		<rect class="cls-3" x="97.13" y="39.94" width="8.7" height="72.28"/>
+		<rect class="cls-3" x="120.13" y="39.94" width="8.7" height="72.28"/>
+		<rect class="cls-3" x="142.46" y="39.94" width="8.7" height="72.28"/>
+		<rect class="cls-3" x="164.79" y="39.94" width="8.7" height="72.28"/>
+		<rect class="cls-3" x="187.46" y="39.94" width="8.7" height="72.28"/>
+		<rect class="cls-3" x="210.13" y="39.94" width="8.7" height="72.28"/>
+		<rect class="cls-3" x="232.46" y="39.94" width="8.7" height="72.28"/>
+		<rect class="cls-3" x="255.79" y="39.94" width="8.7" height="72.28"/>
+		<rect class="cls-3" x="97.13" y="139.61" width="8.7" height="90"/>
+		<rect class="cls-3" x="120.13" y="139.61" width="8.7" height="90"/>
+		<rect class="cls-3" x="142.46" y="139.61" width="8.7" height="90"/>
+		<rect class="cls-3" x="164.79" y="139.61" width="8.7" height="90"/>
+		<rect class="cls-3" x="187.46" y="139.61" width="8.7" height="90"/>
+		<rect class="cls-3" x="210.13" y="139.61" width="8.7" height="90"/>
+		<rect class="cls-3" x="232.46" y="139.61" width="8.7" height="90"/>
+		<rect class="cls-3" x="255.79" y="139.61" width="8.7" height="90"/>
+	</g>
+</svg>

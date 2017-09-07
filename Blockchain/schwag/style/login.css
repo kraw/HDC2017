@@ -1,9 +1,0 @@
-#login {
-  display: flex;
-  flex-direction: column;
-}
-
-#login > div {
-  display: flex;
-  flex-direction: row;
-}
